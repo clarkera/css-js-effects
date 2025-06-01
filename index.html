@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Blur and Space with CSS Variables and JS</title>
+    <link
+      rel="icon"
+      href="https://cdn-icons-png.flaticon.com/128/599/599502.png"
+    />
+  </head>
+  <body>
+    <h2>Having fun with CSS and <span class="hl">JS!</span></h2>
+
+    <div class="controls">
+      <label for="spacing">Spacing:</label>
+      <input
+        id="spacing"
+        type="range"
+        name="spacing"
+        min="10"
+        max="200"
+        value="10"
+        data-sizing="px"
+      />
+
+      <label for="blur">Blur:</label>
+      <input
+        id="blur"
+        type="range"
+        name="blur"
+        min="0"
+        max="25"
+        value="10"
+        data-sizing="px"
+      />
+
+      <label for="base">Base Color</label>
+      <input id="base" type="color" name="base" value="#ffc600" />
+    </div>
+
+    <img
+      src="https://media.istockphoto.com/id/1638146543/photo/dragon-eye-close-up.webp?a=1&b=1&s=612x612&w=0&k=20&c=An0hLZDzCVqM6ombGZ8mJF7jNpJjansM41oVDSBCbfo="
+    />
+
+    <style>
+      :root {
+        --base: #ffc600;
+        --spacing: 10px;
+        --blur: 10px;
+      }
+
+      img {
+        padding: var(--spacing);
+        background: var(--base);
+        filter: blur(var(--blur));
+      }
+
+      .hl {
+        color: var(--base);
+      }
+
+      /*
+        misc styles, nothing to do with CSS variables
+      */
+
+      body {
+        text-align: center;
+        background-image: url("https://images.unsplash.com/photo-1636145354736-439482e677a5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        color: rgb(255, 255, 255);
+
+        font-weight: 100;
+        font-size: 50px;
+      }
+
+      .controls {
+        margin-bottom: 50px;
+      }
+
+      input {
+        width: 100px;
+      }
+    </style>
+
+    <script>
+      const inputs = document.querySelectorAll(".controls input");
+
+      function handleUpdate() {
+        const suffix = this.dataset.sizing || "";
+        document.documentElement.style.setProperty(
+          `--${this.name}`,
+          this.value + suffix
+        );
+      }
+
+      inputs.forEach((input) => input.addEventListener("change", handleUpdate));
+      inputs.forEach((input) =>
+        input.addEventListener("mousemove", handleUpdate)
+      );
+    </script>
+  </body>
+</html>
